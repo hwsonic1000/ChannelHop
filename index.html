@@ -1,0 +1,2870 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--- Title --->
+    <title>ChannelHop</title>
+    <!--- Icon --->
+    <link rel="icon" href="https://fav.farm/%F0%9F%9A%80">
+    <!--- Metadata --->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Henry Dioguardi">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; 
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com https://www.ytimg.com https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; 
+      style-src 'self' 'unsafe-inline' https:; 
+      font-src https: data:; 
+      frame-src https://www.youtube.com; 
+      connect-src https:; 
+      img-src https: data: blob:;">
+    <!--- Google Fonts Preconnection --->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!--- Google Fonts --->
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    <!--- Google Icons --->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!--- IFrame API --->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <!--- Tailwind --->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!--- IDB --->
+    <script src="https://cdn.jsdelivr.net/npm/idb@8/build/umd.js"></script>
+    <!--- Tailwind Config --->
+    <script>
+      tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                'primary-theme': '#fc0303',
+                'secondary-theme': '#2b2727', 
+                'gray': '#4d4a49',
+                'darkGray': '#3d3d3d',
+                'light-blue': '#357be6',    
+                'yellow': '#fa9e00'
+              },
+              
+              fontFamily: {
+                arimo: ['Arimo', 'sans-serif'],
+              },
+              
+              keyframes: {
+                wobble: {
+                  '0%, 100%': { transform: 'rotate(-3deg)' },
+                  '50%': { transform: 'rotate(3deg) translate(1px)' },
+                }
+              },
+              
+              animation: {
+                wobble: 'wobble 0.2s ease-in-out infinite',
+              }
+            }
+          },
+          
+          plugins: [
+            function({ addComponents }) {
+              addComponents({
+                '.nav-btn': {
+                  '@apply hover:opacity-75 transition-opacity cursor-pointer flex items-center font-arimo font-black': {}
+                },
+                
+                '.topbar': {
+                  '@apply bg-gray w-full h-14 text-white font-arimo px-3 flex items-center shadow-md': {}
+                },
+        
+                '.main-logo': {
+                  '@apply font-bold text-white text-lg tracking-tight': {}
+                },
+                
+                '.separator': {
+                  '@apply h-6 w-[1px] bg-white/20 mx-1': {}
+                },
+                
+                '.separator-nm': {
+                  '@apply h-6 w-[1px] bg-white/20': {}
+                },
+                
+                '.separator-hz': { 
+                  '@apply h-[1px] w-full bg-white/20 my-1': {} 
+                },
+                
+                '.separator-hz-nm': {
+                  '@apply h-[1px] w-full bg-white/20': {} 
+                }, 
+                
+                '.alert': {
+                  '@apply relative flex w-full p-4 rounded-lg border border-blue-300/40 bg-light-blue/55 backdrop-blur-sm text-white': {}
+                },
+      
+                '.alert-danger': {
+                  '@apply alert bg-primary-theme/75 border-white/40': {}
+                },
+      
+                '.alert-warning': {
+                  '@apply alert bg-yellow/65 border-white/40': {}
+                },
+                
+                '.checkmark': {
+                  '@apply accent-primary-theme h-4 w-4 aspect-square': {}
+                },
+              })
+            }
+          ]
+        }
+    </script>
+    <style>
+      .material-symbols-outlined {
+      -webkit-user-select: none;
+      /* Safari */
+      -moz-user-select: none;
+      /* Firefox */
+      -ms-user-select: none;
+      /* IE 10+ and Edge */
+      user-select: none;
+      /* Standard syntax */
+      font-variation-settings:
+      'FILL'1,
+      'wght'400,
+      'GRAD'0,
+      'opsz'24
+      }
+      .symbols-noFill {
+      font-variation-settings:
+      'FILL'0,
+      'wght'5000,
+      'GRAD'0,
+      'opsz'24
+      }
+      .settings-rotate:hover {
+      transform: rotate(90deg);
+      }
+      /* Width of the scrollbar */
+      ::-webkit-scrollbar {
+      background: #4d4a49;
+      width: 12px;
+      }
+      /* Round the track */
+      ::-webkit-scrollbar-track {
+      background: #4d4a49;
+      border-radius: 0px;
+      }
+      /* Round the thumb (handle) */
+      ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+      border: 3px solid #999;
+      transition: background-color 0.5s ease;
+      }
+      /* Change thumb color on hover */
+      ::-webkit-scrollbar-thumb:hover {
+      background: #777;
+      }
+      .main-logo {
+      -webkit-user-select: none;
+      /* Safari */
+      -moz-user-select: none;
+      /* Firefox */
+      -ms-user-select: none;
+      /* IE 10+ and Edge */
+      user-select: none;
+      /* Standard syntax */
+      }
+      .main-content {
+      padding-top: 52px;
+      }
+    </style>
+  </head>
+  <body class="bg-secondary-theme m-0 p-0 overflow-x-auto flex flex-col min-h-screen">
+    <header class="fixed w-screen z-50 flex justify-center items-top">
+      <nav class="topbar overflow-x-auto overflow-y-none w-full flex justify-between items-center px-4 h-11 bg-gray shadow-lg">
+        <div class="flex items-center gap-4">
+          <button class="nav-btn aspect-square w-[25px] h-[25px] ml-3 rounded-sm flex items-center justify-center">
+          <span class="material-symbols-outlined !text-[30px]">
+          menu
+          </span>
+          </button>
+          <div class="separator"></div>
+          <button onclick="openPage('introduction')" type="button" class="main-logo nav-btn">
+          ChannelHop 🚀
+          </button>
+          <div class="separator"></div>
+          <button onclick="(async () => { await generateDashboardPage() })();" class="nav-btn text-sm group font-medium">
+          Dashboard
+          </button>
+          <div class="separator"></div>
+          <button onclick="(async () => { await generateExplorePage() })();" type="button" class="nav-btn text-sm font-medium">
+          Explore
+          </button>
+          <div class="separator"></div>
+        </div>
+        <div class="flex items-center">
+          <div class="relative mx-2 flex-1 w-64 max-w-xs">
+            <input type="text" id="globalSearch" placeholder="Search content..." class="w-full bg-gray/50 border border-white/20 rounded-xl px-4 py-2 text-white placeholder:text-white/40 focus:outline-none focus:border-primary-theme focus:ring-2 focus:ring-primary-theme/30 transition-all text-sm pl-10">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none">search</span>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <nav class="sidebar fixed z-40 left-0 top-[42px] h-[calc(100vh-42px)] w-[147px] bg-gray shadow-2xl flex flex-col p-4 text-white
+      transform -translate-x-full transition-transform duration-300 ease-in-out">
+      <button onclick="openModal('modal_TabCloak')" class="nav-btn w-full mb-7 mr-4 flex items-center gap-2 group">
+      Cloak Tab
+      <span class="material-symbols-outlined symbols-noFill">
+      preview
+      </span>
+      </button>
+      <button onclick="openModal('modal_ExportImport')" class="text-sm nav-btn w-full mb-7 mr-4 flex items-center gap-2 group">
+      Import/Export
+      <span class="material-symbols-outlined symbols-noFill">
+      import_export
+      </span>
+      </button>
+    </nav>
+    <!-- Modal Overlay (Hidden by default) -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+      <!-- Modal Box -->
+      <div class="bg-secondary-theme w-full max-w-md mx-4 rounded-2xl border border-white/10 shadow-2xl transform scale-95 transition-transform duration-300">
+        <!-- Header -->
+        <div id="modalHeader" class="flex items-center justify-between p-6 border-b border-white/10">
+          <h3 id="modalHeader-text" class="text-xl font-bold text-white tracking-tight">...</h3>
+          <button onclick="closeModal()" class="text-white/50 hover:text-white transition-colors">
+          <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <!-- Body -->
+        <div id="modalBody" class="p-6 space-y-4 overflow-y-auto max-h-[60vh]">
+        </div>
+        <!-- Footer -->
+        <div id="modalFooter" class="p-6 pt-0 flex gap-3">
+        </div>
+      </div>
+    </div>
+    <!--- Main Content Container --->
+    <main class="main-content min-h-[calc(100vh-3.5rem)] pt-[52px] w-full text-white font-arimo p-6">
+    </main>
+    <footer class="main-footer font-arimo-50 mt-10 py-8 px-6 text-gray-400 w-screen text-sm bg-gray">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex flex-col gap-1">
+          <span class="text-white font-bold tracking-tight">ChannelHop 🚀</span>
+          <p class="text-white/60 text-xs">
+            &copy; 2026 Henry Dioguardi.
+            <span class="block mt-1 italic mb-1">
+            ChannelHop&trade; is a personal project and is not affiliated with, sponsored by, or endorsed by YouTube.
+            All video content and trademarks belong to their respective owners.
+            </span>
+          </p>
+          <p class="text-white/60 text-xs">
+            This is a static file, meaning that updates to ChannelHop&trade; are to be downloaded they are not
+            automatically updated to your version of ChannelHop&trade;. You need to download the new file once an update
+            releases. Sorry!
+          </p>
+        </div>
+      </div>
+    </footer>
+    <script id="idb.js">
+      window.dbReady = (async () => {
+      const dbName = 'CHDatabase';
+      const dbVersion = 1;
+      let db
+      
+      // await idb.deleteDB('ChannelHopDatabase')
+      
+      async function initDB() {
+        db = await idb.openDB(dbName, dbVersion, {
+          upgrade(db, oldVersion, newVersion, transaction) {
+            if (!db.objectStoreNames.contains('sections')) {
+              db.createObjectStore('sections', { keyPath: 'id' });
+            }
+        
+            if (!db.objectStoreNames.contains('content')) {
+              const contentStore = db.createObjectStore('content', { keyPath: 'name' });
+              contentStore.createIndex('sectionId', 'sectionId'); 
+            }
+          }
+        });
+        console.log('IndexedDB v' + dbVersion + ' initialized. Database: ' + dbName);
+      }
+      
+      async function saveItem(storeName, item) {
+        console.log('Saving to', storeName, item);
+        return db.put(storeName, item);
+      }
+      
+      // Section functions
+      window.saveSection = saveItem.bind(null, 'sections');
+      window.getAllSections = async (excludeList = []) => {
+        const sections = await db.getAll('sections');
+        return excludeList.length ? sections.filter(s => !excludeList.includes(s.id)) : sections;
+      };
+      window.getSectionById = id => db.get('sections', id);
+      window.deleteSection = id => db.delete('sections', id);
+      
+      // Content functions  
+      window.saveContent = saveItem.bind(null, 'content');
+      window.getAllContent = () => db.getAll('content');
+      window.getContentById = id => db.get('content', id);
+      window.deleteContent = id => db.delete('content', id);
+      
+      window.getContentFromSection = async (sectionId) => {
+        console.log('Getting content from section:', sectionId);
+        const tx = db.transaction('content', 'readonly');
+        const store = tx.objectStore('content');
+        const index = store.index('sectionId');
+        return await index.getAll(sectionId);
+      };
+      window.dbVersion = dbVersion;
+      window.dbName = dbName;
+      
+      // 🔥 ERUDA-CONSOLE PURGE COMMANDS
+      (async()=>{
+        // STATS
+        window.STATS=async()=>{ 
+          const db=await idb.openDB(dbName,dbVersion);
+          const s=await db.getAll('sections'),c=await db.getAll('content');
+          console.table({sections:s.length,videos:c.length,timestamps:c.filter(x=>x.timestamp>0).length});
+          db.close();
+        }
+        
+        // PURGE ALL
+        window.PURGE_ALL=async()=>{
+          if(!confirm('DELETE EVERYTHING?'))return;
+          await idb.deleteDB(dbName);
+          console.log('💀 ALL GONE');
+          location.reload();
+        }
+        
+        // Refresh function
+        window.REFRESH=async()=>{
+          location.reload();
+        }
+        
+        // PURGE VIDEOS
+        window.PURGE_VIDEOS=async()=>{
+          if(!confirm('Delete ALL content?'))return;
+          const db=await idb.openDB(dbName,dbVersion);
+          await db.clear('content');
+          console.log('✅ All Content Gone!');
+          generateDashboardPage();
+        }
+        
+        // PURGE SECTIONS  
+        window.PURGE_SECTIONS=async()=>{
+          if(!confirm('Delete sections?'))return;
+          const db=await idb.openDB(dbName,dbVersion);
+          await db.clear('sections');
+          const c=await db.getAll('content');
+          for(let i of c){i.sectionId=null;await db.put('content',i)}
+          console.log('✅ Sections gone');
+          generateDashboardPage();
+        }
+      })();
+      
+      await initDB();
+      await indexedDB.databases().then(dbs => {
+        console.log('Remaining DBs:', dbs.map(db => db.name));
+      });
+        })();
+    </script>
+    <script id="preset_html">
+      window.introductionHtml = `
+        <h1 class="text-2xl font-bold mb-6">Welcome to ChannelHop</h1>
+        
+        <h2 class="text-white text-xl font-medium mb-6">
+          What is ChannelHop?
+        </h2>
+        
+        <p class="text-white/60 text-xl mb-10">
+          ChannelHop is your own ultimate tool to embed Videos Or Channels! Store Channels or Videos in an easy to explore format along with the saving of Channels or Videos
+        </p>
+        
+        <h2 class="text-white text-xl font-medium">
+          Features:
+        </h2>
+        
+        <ul class="list-inside space-y-3 mt-4 text-white/80 text-lg">
+          <li class="flex items-start gap-3">
+            <span class="text-primary-theme">●</span>
+            <span><strong>Embed Videos:</strong> Easily add any YouTube video using its URL.</span>
+          </li>
+          
+          <li class="flex items-start gap-3">
+            <span class="text-primary-theme">●</span>
+            <span><strong>Channel Streams:</strong> View many videos from Channels you love!</span>
+          </li>
+          
+          <li class="flex items-start gap-3">
+            <span class="text-primary-theme">●</span>
+            <span><strong>Local Storage:</strong> Save your favorite "Hops" so they are there when you come back.</span>
+          </li>
+          
+          <li class="flex items-start gap-3">
+            <span class="text-primary-theme">●</span>
+            <span><strong>Clean Interface:</strong> No distractions, just your content.</span>
+          </li>
+        </ul>
+        `
+        
+        window.explorationHtml = `
+        <p class="text-white text-center font-arimo font-bold">
+          Explore Curated Content
+        </p>
+        <div class="separator-hz mb-4"></div>
+        `
+        
+        window.iframePageHtml = `
+        <p class="text-white text-center font-arimo font-bold">
+          Video
+        </p>
+        <div class="separator-hz mb-4"></div>
+        
+        <div class="flex justify-center items-center min-h-full min-w-full">
+          <div
+            class="mx-auto mt-3 bg-gray rounded-xl"
+            id="player"
+            >
+          </div>
+        </div>
+        <div id="videoControls" class="flex flex-col justify-center items-center mt-2 mb-2 gap-4">
+          <div class="wrapper flex flex-row justify-center items-center">
+            <button id="prevBtn" class="w-14 h-14 mr-3 flex items-center justify-center bg-primary-theme rounded-full text-white shadow-lg hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+              <span class="material-symbols-outlined symbols-noFill">
+                skip_previous
+              </span>
+            </button>
+            <button id="nextBtn" class="w-14 h-14 flex items-center justify-center bg-primary-theme rounded-full text-white shadow-lg hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+              <span class="material-symbols-outlined symbols-noFill">
+                skip_next
+              </span>
+            </button>
+          </div>
+          <div class="wrapper flex flex-row justify-center items-center">
+            <input type="number" id="gotoIndex" min="1" placeholder="Video #" class="mr-2 px-2 py-1 w-20 rounded font-arimo text-black text-center">
+            <button id="gotoBtn" class="bg-primary-theme text-white px-4 py-2 rounded">Go</button>
+          </div>
+          
+          <div id="iframePage_indexWrapper" class="wrapper w-full h-auto flex flex-row justify-center items-center">
+            <label class="block text-sm font-medium text-white/60 mb-1.5 mr-1.5">
+              # of Videos:
+            </label>
+            
+            <span id="iframePage_maxIndex" class="text-xs h-8 rounded-full flex justify-center items-center bg-primary-theme text-white font-arimo font-semibold" style="width: 3.75rem;">
+              ...
+            </span>
+          </div>
+        </div>
+        <div class="flex justify-center items-center min-w-full">
+          <div class="alert w-[75%]">
+            Disclaimer: Some channels may not show all content due to settings set by the creator. <br/>
+            Also, for channels the playlist button is gone. I cannot control though.
+          </div>
+        </div>
+        `
+        
+        window.dashboardHtml = `
+        <p class="text-white text-center font-arimo font-bold">
+          Your Dashboard
+        </p>
+        <div class="separator-hz mb-4"></div>
+        `
+        
+        window.warningHtml = `
+          <p class="text-center w-full font-arimo font-bold text-white text-5xl">404 Error: Page does not exist.</p>
+        `
+    </script>
+    <script id="sidebar">
+      document.addEventListener('DOMContentLoaded', () => {
+          const menuBtn = document.querySelector('.topbar .material-symbols-outlined');
+          const sidebar = document.querySelector('.sidebar');
+      
+          // Initially hidden off-screen
+          sidebar.classList.add('hidden');
+      
+          menuBtn.addEventListener('click', () => {
+            if (sidebar.classList.contains('hidden')) {
+              // Show & slide in
+              sidebar.classList.remove('hidden');
+              requestAnimationFrame(() => {
+                sidebar.classList.remove('-translate-x-full');
+              });
+            } else {
+              // Slide out & then hide after transition 
+              sidebar.classList.add('-translate-x-full');
+      
+              sidebar.addEventListener('transitionend', function handler() {
+                sidebar.classList.add('hidden');
+                sidebar.removeEventListener('transitionend', handler);
+              });
+            }
+          });
+        });
+    </script>
+    <script id="tabs.js">
+      const modal = document.getElementById('modalOverlay');
+        const modalBox = modal.querySelector('div');
+        const sidebar2 = document.querySelector('.sidebar');
+        
+        const modalHeaderText = document.getElementById('modalHeader-text');
+        const modalHeader = document.getElementById('modalHeader');
+        const modalBody = document.getElementById('modalBody');
+        const modalFooter = document.getElementById('modalFooter');
+      
+        // Get references to inputs inside the modal
+        const youtubeUrlInput = modal.querySelector('input[type="text"]');
+        const categorySelect = modal.querySelector('select');
+        
+        async function reloadDropdown(dropdown, firstOptionValue = 'Please select a option', firstOptionDisabled = true, ignoreArray) {
+          dropdown.innerHTML = ''; // Clear existing
+        
+          let defaultOption = document.createElement('option');
+          defaultOption.setAttribute('value', '');
+          if (firstOptionDisabled == true) {
+            defaultOption.setAttribute('disabled', '');
+          }
+          defaultOption.setAttribute('selected', '');
+          defaultOption.textContent = firstOptionValue;
+      
+          dropdown.appendChild(defaultOption);
+              
+          let sections = await getAllSections(ignoreArray);
+              
+          sections.sort((a, b) => a.id.localeCompare(b.id));
+              
+          sections.forEach(section => {
+            // Create the option regardless of querySelector success
+            let newElement = document.createElement('option');
+            newElement.setAttribute('value', section.id);
+            newElement.textContent = section.id;
+            dropdown.appendChild(newElement);
+          });
+        }
+      
+        function openModal(type, extraData = {}) {
+          if (type == 'modal_TabCloak') {
+            modalHeaderText.innerHTML = 'Tab Cloak'
+            
+            modalBody.innerHTML = `
+              <div>
+                <label class="block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                  Tab Name
+                </label>
+      
+                <input id="modal_CloakName" type="text" placeholder="Google"
+                  class="w-full bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+              </div>
+      
+              <div>
+                <label class="block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                  Tab Image
+                </label>
+      
+                <input id="modal_CloakImage" type="text" placeholder="https://www.google.com/favicon.ico"
+                  class="w-full bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                  Images
+                </label>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div class="flex flex-1 bg-gray-100 rounded-lg shadow-md overflow-hidden">
+                    <input type="text" value="Google Classroom" id="copy-target-1" class="font-arimo font-bold text-center p-2 border-r border-gray-300 bg-gray text-white focus:outline-none flex-grow w-full text-xs text-gray-700" readonly>
+                    <button onclick="copyToClipboard('https://edu.google.com/images/svg/gsuite-icons/classroom.svg')" class="font-arimo bg-primary-theme hover:bg-gray-400 text-white font-bold py-2 px-4 text-xs">Copy Link</button>
+                  </div>
+      
+                  <div class="flex flex-1 bg-gray-100 rounded-lg shadow-md overflow-hidden">
+                    <input type="text" value="Google" id="copy-target-2" class="font-arimo font-bold text-center p-2 border-r border-gray-300 bg-gray text-white focus:outline-none flex-grow w-full text-xs text-gray-700" readonly>
+                    <button onclick="copyToClipboard('https://www.google.com/favicon.ico')" class="font-arimo bg-primary-theme hover:bg-gray-400 text-white font-bold py-2 px-4 text-xs">Copy Link</button>
+                  </div>
+                  
+                  <div class="flex flex-1 bg-gray-100 rounded-lg shadow-md overflow-hidden">
+                    <input type="text" value="Google Docs" id="copy-target-3" class="font-arimo font-bold text-center p-2 border-r border-gray-300 bg-gray text-white focus:outline-none flex-grow w-full text-xs text-gray-700" readonly>
+                    <button onclick="copyToClipboard('https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png')" class="font-arimo bg-primary-theme hover:bg-gray-400 text-white font-bold py-2 px-4 text-xs">Copy Link</button>
+                  </div>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-white/60 mt-2 ml-1">
+                    Extra
+                  </label>
+                  
+                  <div class="flex items-center p-2">
+                    <input type="checkbox" id="modal_CloakOpenNew" class="checkmark" />
+                    <label for="modal_CloakOpenNew" class="ml-2 text-sm font-medium font-arimo text-white">Open in new tab (Blob format) (Extra Security)</label>
+                  </div>
+                </div>
+              </div>
+            `
+            
+            modalFooter.innerHTML = `
+              <button onclick="closeModal()" class="flex-1 px-4 py-3 rounded-xl font-bold text-white/70 hover:bg-white/5 transition-all">
+                Cancel
+              </button>
+            
+              <button onclick="closeModal()" id="modal_CloakButton" class="flex-1 bg-primary-theme px-4 py-3 rounded-xl font-bold text-white hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary-theme/20">
+                Cloak
+              </button>
+            `
+          } else if (type == 'modal_SaveChannel') {
+            modalHeaderText.innerHTML = 'Add new 🚀';
+            
+            modalBody.innerHTML = `
+            <div>
+              <label class="block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                Add section?
+              </label>
+              
+              <div class="flex items-center p-2 mb-2">
+                <input type="checkbox" id="addSection_addSectionCheck" class="checkmark" />
+                <label for="addSection_addSectionCheck" class="ml-2 text-sm font-medium font-arimo text-white">Add new Section</label>
+              </div>
+              
+              <div class="separator-hz-nm mb-2"></div>
+              
+              <!--- Section Section --->
+              <label class="addSection_sec block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                Section Name
+              </label>
+              
+              <input id="addSection_sec_sectionName" type="text" placeholder="My Music" 
+              class="addSection_sec w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+              
+              <!--- YT Section --->
+              <label class="addSection_yt block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                YouTube URL
+              </label>
+            
+              <input id="addSection_yt_youtubeURLBox" type="text" placeholder="https://youtube.com/watch?v=..." 
+              class="addSection_yt w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+              
+              <label class="addSection_yt block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                Display Name
+              </label>
+              <input id="addSection_yt_youtubeDisplayNameBox" type="text" placeholder="MrBeast Gaming" 
+                class="addSection_yt w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+              
+              <label id="handleLabel" class="addSection_yt block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                Handle (for avatar)
+              </label>
+              <input id="addSection_yt_youtubeHandleBox" type="text" placeholder="@MrBeast" 
+                class="addSection_yt w-full mb-2 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+              
+              <label class="addSection_yt block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                Type Of Content
+              </label>
+              <select id="addSection_yt_youtubeTypeDropdown"
+              class="addSection_yt w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+                <option value="channel" selected>
+                  Channel
+                </option>
+                
+                <option value="video">
+                  Video
+                </option>
+                
+                <option value="playlist">
+                  Playlist
+                </option>
+              </select>
+              
+              <label class="addSection_yt block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                Section
+              </label>
+              
+              <select id="addSection_yt_dropdownSection" 
+              class="addSection_yt w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+              </select>
+            </div>
+            `
+          
+            modalFooter.innerHTML = `
+            <button onclick="closeModal()" class="flex-1 px-4 py-3 rounded-xl font-bold text-white/70 hover:bg-white/5 transition-all">
+              Cancel
+            </button>
+            
+            <button id="addSection_addBtn" class="flex-1 bg-primary-theme px-4 py-3 rounded-xl font-bold text-white hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary-theme/20">
+              Add
+            </button>
+            `
+            
+            let urlBox = modalBody.querySelector('#addSection_yt_youtubeURLBox');
+            let nameBox = modalBody.querySelector('#addSection_yt_youtubeDisplayNameBox');
+            let handleBox = modalBody.querySelector('#addSection_yt_youtubeHandleBox');
+            let typeDropdown = modalBody.querySelector('#addSection_yt_youtubeTypeDropdown');
+            
+            let secDropdown = modalBody.querySelector('#addSection_yt_dropdownSection');
+            let secName = modalBody.querySelector('#addSection_sec_sectionName');
+            
+            let check = modalBody.querySelector('#addSection_addSectionCheck');
+            
+            let ytStuff = modalBody.querySelectorAll('.addSection_yt');
+            let sectionStuff = modalBody.querySelectorAll('.addSection_sec');
+            
+            let addBtn = modalFooter.querySelector('#addSection_addBtn');
+            
+            let handleLabel = modalBody.querySelector('#handleLabel');
+            
+            function updateModal() {
+              if (check.checked) {
+                ytStuff.forEach(element => element.style.display = 'none');
+                sectionStuff.forEach(element => element.style.display = '');
+              } else {
+                ytStuff.forEach(element => element.style.display = '');
+                sectionStuff.forEach(element => element.style.display = 'none');
+              
+                if (typeDropdown.value !== 'channel') {
+                  handleBox.style.display = 'none';
+                  handleLabel.style.display = 'none';
+                } else {
+                  handleBox.style.display = '';
+                  handleLabel.style.display = '';
+                }
+              }
+              
+              if (typeDropdown.value == 'channel') {
+                urlBox.placeholder = 'https://www.youtube.com/channel/...';
+                nameBox.placeholder = 'My Channel';
+                handleBox.placeholder = '@example';
+              } else if (typeDropdown.value == 'playlist') {
+                urlBox.placeholder = 'https://www.youtube.com/playlist?list=...';
+                nameBox.placeholder = 'My Playlist';
+              } else if (typeDropdown.value == 'video') {
+                urlBox.placeholder = 'https://www.youtube.com/watch?v=...';
+                nameBox.placeholder = 'My Video';
+              }
+            }
+            
+            check.addEventListener('click', function() {
+              updateModal();
+            });
+            
+            typeDropdown.addEventListener('click', function() {
+              updateModal();
+            });
+            
+            // Init
+            updateModal();
+            (async () => {
+              await dbReady;
+              
+              await reloadDropdown(secDropdown);
+            })();
+            
+            addBtn.addEventListener('click', async function() {
+              closeModal();
+              
+              if (check.checked) {
+                await saveSection({
+                  id: secName.value || 'section 1'
+                });
+                
+                currentPage = ''
+                await generateDashboardPage();
+              } else {
+                let urlValue = urlBox.value;
+                let nameValue = nameBox.value;
+                let handleValue = handleBox.value;
+                let typeDropdownValue = typeDropdown.value;
+                let secValue = secDropdown.value;
+                
+                if (!urlValue) {
+                  alert('Please insert a URL!');
+                  return
+                }
+                
+                if (!nameValue) {
+                  alert('Please insert a name!');
+                  return
+                }
+                
+                if (!typeDropdownValue) {
+                  alert('No section selected!');
+                  return
+                }
+                
+                if (!secValue) {
+                  alert('No section selected');
+                  return
+                }
+                
+                await saveContent({
+                  ytId: urlValue || "UCX6OQ3DkcsbYNE6H8uQQuVA",
+                  type: typeDropdownValue || 'channel',
+                  name: nameValue,
+                  handle: handleValue,
+                  imageHtml: ``,
+                  sectionId: secValue || null,
+                  created: Date.now()
+                });
+                
+                currentPage = ''
+                await generateDashboardPage();
+              }
+            });
+          } else if (type == 'modal_DeleteThing') {
+            modalHeaderText.innerHTML = 'Are you sure?';
+        
+            modalFooter.innerHTML = `
+              <button onclick="closeModal()" class="flex-1 px-4 py-3 rounded-xl font-bold text-white/70 hover:bg-white/5 transition-all">
+                Cancel
+              </button>
+      
+              <button id="deleteThing_deleteBtn" class="flex-1 bg-primary-theme px-4 py-3 rounded-xl font-bold text-white hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary-theme/20">
+                Delete
+              </button>
+            `;
+        
+            let bodyHtmltoSet = `
+              <p class="font-bold font-arimo text-xl text-white text-center">You are now deleting an item, are you sure you want to delete this? It will be deleted <u>FOREVER!</u></p>
+            `;
+        
+            let element;
+            let typeSection;
+        
+            if (extraData) {
+              element = extraData.element;
+              typeSection = extraData.typeSection || extraData.type;
+      
+              if (element && typeSection) {
+                if (element.children.length > 0 && typeSection == 'section') {
+                  bodyHtmltoSet = `
+                    <p class="font-bold font-arimo text-xl text-white text-center">
+                      You are deleting a section with content inside! Do you want to move the content?
+                    </p>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                        Section to move to...
+                      </label>
+            
+                      <select id="deleteThing_deleteDropdown"
+                        class="w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+                      </select>
+                    </div>
+                  `;
+                }
+              }
+            }
+      
+            modalBody.innerHTML = bodyHtmltoSet;
+        
+            let dropdown = modalBody.querySelector('#deleteThing_deleteDropdown');
+            let deleteBtn = modalFooter.querySelector('#deleteThing_deleteBtn');
+        
+            (async () => {
+              if (dropdown && extraData && extraData.typeSection && extraData.typeSection == 'section') {
+                await reloadDropdown(dropdown, 'None', false, [element.id || '']);
+              }
+            })();
+        
+            deleteBtn.addEventListener('click', async function() {
+              console.log('Delete button clicked');
+              closeModal();
+                            
+              if (extraData && extraData.typeSection && extraData.typeSection == 'section') {
+              try {
+                const targetSectionId = dropdown?.value || null;
+      
+                const sectionIdToDelete = element.id;
+                console.log('Deleting section:', sectionIdToDelete, 'Moving content to:', targetSectionId);
+      
+                // Get the target section if an ID is specified and not empty or None
+                const targetSection = targetSectionId && targetSectionId !== '' && targetSectionId.toLowerCase() !== 'none'
+                  ? await getSectionById(targetSectionId) : null;
+        
+                // Fetch content belonging to the section to delete
+                const contentItems = await getContentFromSection(sectionIdToDelete);
+                console.log('Content items found:', contentItems.length);
+      
+                if (targetSection && contentItems.length > 0) {
+                  for (const item of contentItems) {
+                    // Change the sectionId of content to the new section ID
+                    item.sectionId = targetSection.id;
+                    await saveContent(item);
+                  }
+                } else if (contentItems.length > 0) {
+                  // No target section, delete all content items in section
+                  for (const item of contentItems) {
+                    await deleteContent(item.name);
+                  }
+                }
+      
+                // Finally, delete the section itself
+                await deleteSection(sectionIdToDelete);
+      
+                currentPage = '';
+                await generateDashboardPage();
+              } catch (error) {
+                console.error('Error during deletion:', error);
+                if (error instanceof Error) {
+                  console.error('Error message:', error.message);
+                  console.error('Stack trace:', error.stack);
+                } else {
+                  console.error('Unknown error:', error);
+                }
+              }
+              } else {
+                 // deleting content - FIXED VERSION
+                const contentId = extraData.contentId || element?.id;
+        
+                console.log('Deleting content with ID:', contentId);
+        
+                if (contentId) {
+                  await deleteContent(contentId);
+                  console.log('Content deleted successfully');
+                } else {
+                  console.error('No content ID found for deletion');
+                }
+                
+                currentPage = '';
+                await generateDashboardPage();
+              }
+            });
+          } else if (type == "modal_CopyItem") {
+            let url = extraData.copyUrl || 'No Data';
+            let name = extraData.copyName || 'No Data';
+            let handle = extraData.copyHandle || 'No Data';
+            
+            modalHeaderText.innerHTML = 'Copy text';
+            
+            modalBody.innerHTML = `
+              <div>
+                <label class="addSection_yt block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                  ID
+                </label>
+                <input readonly type="text" value="${url}" 
+                class="addSection_yt w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+              
+                <label class="addSection_yt block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                  Name
+                </label>
+                <input readonly type="text" value="${name}" 
+                class="addSection_yt w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+              
+                <label class="addSection_yt block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                    Handle
+                </label>
+                <input readonly type="text" value="${handle.toLowerCase()}" 
+                class="addSection_yt w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+              </div>
+            `
+          } else if (type == "modal_Relocate") {
+        modalHeaderText.innerHTML = 'Relocate Content';
+        
+        modalFooter.innerHTML = '<button onclick="closeModal()" class="flex-1 px-4 py-3 rounded-xl font-bold text-white/70 hover:bg-white/5 transition-all">Cancel</button><button id="relocate_relocateBtn" class="flex-1 bg-primary-theme px-4 py-3 rounded-xl font-bold text-white hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary-theme/20">Relocate</button>';
+        
+        (async () => {
+      let contentId = (extraData && extraData.id) || null;  // ← Content NAME (keyPath)
+      let element = (extraData && extraData.element) || null;
+        
+      if (!contentId) {
+        alert('Cannot relocate: No content ID provided.');
+        closeModal();
+        return;
+      }
+      
+      // Get the actual content object
+      let foundContent = await getContentById(contentId);
+      if (!foundContent) {
+        alert('Content not found in database.');
+        closeModal();
+        return;
+      }
+      
+      modalBody.innerHTML = `
+        <div class="space-y-3">
+          <div>
+            <p class="text-white/80 mb-2">Moving: <strong>${foundContent.name}</strong></p>
+            <p class="text-sm text-white/60">Current section: <strong>${foundContent.sectionId || 'Uncategorized'}</strong></p>
+          </div>
+          <label class="block text-sm font-medium text-white/60 mb-1.5 ml-1">
+            New Section
+          </label>
+          <select id="relocate_toMoveDropdown"
+            class="w-full bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary-theme transition-colors">
+          </select>
+        </div>
+      `
+      
+      let dropdown = modalBody.querySelector('#relocate_toMoveDropdown');
+      let relocateButton = modalFooter.querySelector('#relocate_relocateBtn');
+      
+      // Load sections (exclude current section)
+      await reloadDropdown(dropdown, 'Select new section...', true, [foundContent.sectionId]);
+      
+      relocateButton.onclick = async () => {
+        const newSectionId = dropdown.value;
+        
+        if (!newSectionId) {
+          alert('Please select a new section.');
+          return;
+        }
+        
+        // Update content with new sectionId
+        foundContent.sectionId = newSectionId;
+        await saveContent(foundContent);
+        
+        console.log(`✅ Moved "${foundContent.name}" to "${newSectionId}"`);
+        closeModal();
+        
+        // Refresh dashboard
+        currentPage = '';
+        await generateDashboardPage();
+      };
+        })();
+          } else if (type == 'modal_Edit') {
+            (async () => {
+            modalHeaderText.innerHTML = 'Edit Content';
+           
+            let contentId = extraData && extraData.id || '';
+            let currentContent = null;
+            
+            if (contentId) {
+              currentContent = await getContentById(contentId);
+            } else {
+              alert('no content id!');
+              return;
+            }
+          
+            modalBody.innerHTML = `
+              <div>
+                <label class="block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                  Name
+                </label>
+                <input id="editSection_name" type="text" placeholder="New Name" 
+                class="w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+                
+                <label id="handleLabel" class="block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                  Handle
+                </label>
+                <input id="editSection_handle" type="text" placeholder="@newname" 
+                class="w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+                
+                <label class="block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                  ID
+                </label>
+                <input id="editSection_link" type="text" placeholder="https://youtube.com/video?=..." 
+                class="w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+                
+                <label class="block text-sm font-medium text-white/60 mb-1.5 ml-1">
+                  Type
+                </label>
+                <select
+                id="editSection_dropdown"
+                class="w-full mb-4 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-primary-theme transition-colors">
+                <option value="channel">
+                  Channel
+                </option>
+                
+                <option value="video">
+                  Video
+                </option>
+                
+                <option value="playlist">
+                  Playlist
+                </option>
+              </select>
+              </div>
+            `;
+            
+            modalFooter.innerHTML = `
+              <button onclick="closeModal()" class="flex-1 px-4 py-3 rounded-xl font-bold text-white/70 hover:bg-white/5 transition-all">
+                Cancel
+              </button>
+      
+              <button id="editSection_saveBtn" class="flex-1 bg-primary-theme px-4 py-3 rounded-xl font-bold text-white hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary-theme/20">
+                Save
+              </button>
+            `;
+            
+            const newName = modalBody.querySelector('#editSection_name');
+            const newHandle = modalBody.querySelector('#editSection_handle');
+            const newId = modalBody.querySelector('#editSection_link');
+            const newType = modalBody.querySelector('#editSection_dropdown');
+            
+            const newHandleLabel = modalBody.querySelector('#handleLabel');
+            
+            let saveBtn = modalFooter.querySelector('#editSection_saveBtn');
+            
+            newType.value = currentContent.type;
+            newName.value = currentContent.name;
+            newId.value = currentContent.ytId;
+              
+            if (currentContent.type == 'channel') {
+              newHandle.value = currentContent.handle;
+              newHandle.style.display = '';
+              newHandleLabel.style.display = '';
+            } else {
+              newHandle.style.display = 'none';
+              newHandleLabel.style.display = 'none';
+            }
+            
+            newType.onchange = () => {
+              if (newType.value === 'channel') {
+                newHandle.style.display = '';
+                newHandleLabel.style.display = '';
+              } else {
+                newHandle.style.display = 'none';
+                newHandleLabel.style.display = 'none';
+                newHandle.value = '';  // Clear handle if hidden
+              }
+            };
+        
+            // Save changes function
+            async function saveChanges() {
+              if (!newName.value || !newId.value || !newType.value) {
+                alert('Value(s) cannot be empty!');
+                return false;
+              }
+              if (!currentContent) {
+                alert('Content not found!');
+                return false;
+              }
+              
+              const oldName = currentContent.name;
+              
+              // Update and save the content
+              currentContent.name = newName.value;
+              currentContent.handle = newHandle.value;
+              currentContent.ytId = newId.value;
+              currentContent.type = newType.value;
+              
+              if (oldName !== newName.value) {
+                await deleteContent(oldName);
+              }
+              
+              await saveContent(currentContent);
+              currentPage = '';
+              await generateDashboardPage();
+              return true;
+            }
+            
+            saveBtn.onclick = async () => {
+              await saveChanges();
+              closeModal();
+            };
+            })();
+          } else if (type == 'modal_ExportImport') {
+        modalHeaderText.innerHTML = 'Export / Import Data';
+        
+        modalBody.innerHTML = `
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-white/60 mb-2 ml-1">
+            📤 Export Data
+          </label>
+          <div class="flex gap-2">
+            <button id="exportAllBtn" class="flex-1 bg-primary-theme px-4 py-3 rounded-xl font-bold text-white hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary-theme/20">
+              Export All Data
+            </button>
+            <button id="exportSectionsBtn" class="flex-1 bg-primary-theme/90 px-4 py-3 rounded-xl font-bold text-white hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary-theme/20">
+              Sections Only
+            </button>
+          </div>
+          <textarea id="exportOutput" readonly 
+            class="w-full mt-3 h-32 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white font-mono text-sm resize-none"
+            placeholder="Exported data will appear here..."></textarea>
+        </div>
+        
+        <div class="separator-hz-nm"></div>
+        
+        <div>
+          <label class="block text-sm font-medium text-white/60 mb-2 ml-1">
+            📥 Import Data
+          </label>
+          <textarea id="importInput" 
+            class="w-full h-32 bg-gray/50 border border-white/10 rounded-xl px-4 py-3 text-white font-mono text-sm resize-none focus:outline-none focus:border-primary-theme"
+            placeholder="Paste exported JSON here..."></textarea>
+          <div class="flex gap-2 mt-3">
+            <button id="importBtn" class="flex-1 bg-green-600 hover:bg-green-500 px-4 py-3 rounded-xl font-bold text-white active:scale-95 transition-all shadow-lg shadow-green-500/20">
+              Import Data
+            </button>
+            <button id="clearImportBtn" class="flex-1 bg-gray-600 hover:bg-gray-500 px-4 py-3 rounded-xl font-bold text-white active:scale-95 transition-all">
+              Clear
+            </button>
+          </div>
+        </div>
+        
+        <div id="importStatus" class="mt-2 hidden text-sm p-2 rounded-lg"></div>
+      </div>
+        `;
+        
+        modalFooter.innerHTML = `
+      <button onclick="closeModal()" class="flex-1 px-4 py-3 rounded-xl font-bold text-white/70 hover:bg-white/5 transition-all">
+        Close
+      </button>
+        `;
+        
+        // Setup event listeners
+        requestAnimationFrame(async () => {
+          await dbReady;
+          setupExportImportListeners();
+        });
+      }
+        
+          // Show modal
+          modal.classList.remove('opacity-0', 'pointer-events-none');
+          modal.classList.add('opacity-100', 'pointer-events-auto');
+      
+          modalBox.classList.remove('scale-95');
+          modalBox.classList.add('scale-100');
+        }
+      
+        function closeModal() {
+          modal.classList.add('opacity-0', 'pointer-events-none');
+          modal.classList.remove('opacity-100', 'pointer-events-auto');
+      
+          modalBox.classList.remove('scale-100');
+          modalBox.classList.add('scale-95');
+          
+          document.querySelectorAll('div.absolute.opacity-100').forEach(dropdown => {
+            dropdown.classList.remove('opacity-100');
+            dropdown.classList.add('-translate-y-full');
+          });
+          
+          modalBox.addEventListener('transitionend', function modalCloseEnd() {
+            modalHeaderText.innerHTML = '';
+            modalBody.innerHTML = '';
+            modalFooter.innerHTML = '';
+            
+            modalBox.removeEventListener('transitionend', modalCloseEnd);
+          });
+        }
+      
+        // Close modal if user clicks the dark background
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal();
+        });
+        
+        window.currentPage = '';
+        
+        function openPage(page, callback) {
+          if (page == null) {
+            console.warn('Cannot open page! Page is null!')
+            return false;
+          }
+          
+          const mainContainer = document.querySelector('.main-content');
+          
+          let pageNormalized = page.toLowerCase().trim();
+          let currentPageNormalized = (currentPage || '').toLowerCase().trim();
+          
+          if (currentPageNormalized === pageNormalized) {
+            console.warn('Cannot open page! Opening same page');
+            return false;
+          }
+          
+          if (pageNormalized == 'introduction') {
+            mainContainer.innerHTML = introductionHtml;
+          } else if (pageNormalized== 'explore') {
+            mainContainer.innerHTML = explorationHtml;
+          } else if (pageNormalized == 'iframepage') {
+            mainContainer.innerHTML = iframePageHtml;
+          } else if (pageNormalized == 'dashboard') {
+            mainContainer.innerHTML = dashboardHtml;
+          } else {
+            mainContainer.innerHTML = warningHtml;
+          }
+          
+          const noSpaces = mainContainer.innerHTML.trim();
+          
+          if (noSpaces.length === 0) {
+            mainContainer.innerHTML = warningHtml;
+            return false;
+          }
+          
+          currentPage = pageNormalized;
+          
+          if (callback) {
+            setTimeout(function() {
+              callback();
+            }, 100)
+          }
+          
+          return true;
+        }
+        
+        openPage('introduction');
+        
+        function openPageAdvanced(html) {
+          if (html == null) {
+            return;
+          }
+          
+          const mainContainer = document.querySelector('.main-content');
+          
+          mainContainer.innerHTML = html;
+        }
+    </script>
+    <script id="cloak.js">
+      // The container you are watching
+        const container = document.querySelector('#modalFooter');
+      
+        function cloakTab() {
+          // 1. Get all the HTML from the current page
+          const pageHTML = document.documentElement.outerHTML;
+          
+          const blob = new Blob([pageHTML], { type: 'text/html' });
+          const blobUrl = URL.createObjectURL(blob);
+      
+          const newTab = window.open(blobUrl, '_self');
+        }
+      
+        // Create observer to detect if the button is added
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.addedNodes.length) {
+              const button = container.querySelector('#modal_CloakButton');
+              
+              if (button && !button.hasAttribute('data-listener-attached')) {
+                button.addEventListener('click', () => {
+                  const tabName = document.getElementById('modal_CloakName')?.value.trim();
+                  const tabImage = document.getElementById('modal_CloakImage')?.value.trim();
+                  
+                  const checkMark = document.getElementById('modal_CloakOpenNew')
+                
+                  if (!tabName) {
+                    alert('Please enter a Tab Name');
+                    return;
+                  }
+                  
+                  if (!tabImage) {
+                    alert('Please enter a Tab Image URL');
+                    return;
+                  }
+                  
+                  document.title = tabName;
+                  
+                  let link = document.querySelector("link[rel~='icon']");
+              
+                  if (!link) {
+                    link = document.createElement('link');
+                    link.rel = 'icon';
+                    document.head.appendChild(link);
+                  }
+                
+                  link.href = tabImage;
+                  
+                  if (checkMark.checked === true) {
+                    cloakTab();
+                  }
+                });
+                
+                // Mark the button so we don't add multiple listeners
+                button.setAttribute('data-listener-attached', 'true');
+              }
+            }
+          });
+        });
+      
+        // Configure observer
+        observer.observe(container, { childList: true, subtree: true });
+    </script>
+    <script id="tools.js">
+      async function copyToClipboard(textToCopy) {
+        try {
+          await navigator.clipboard.writeText(textToCopy);
+          console.log('Clipboard updated');
+        } catch (err) {
+          // Clipboard write failed, likely permission denied
+          console.warn('Failed to copy to clipboard:', err);
+        }
+      }
+        
+      function extractId(input, type) {
+        // Handle null/undefined inputs
+        if (!input || typeof input !== 'string') {
+      return input || '';
+        }
+      
+        let id = input.trim();
+      
+        const videoRegex = /(?:v=|\/v\/|youtu\.be\/|embed\/|shorts\/)([a-zA-Z0-9_-]{11})/;
+        const playlistRegex = /[?&]list=([a-zA-Z0-9_-]+)/;
+        const channelUrlRegex = /youtube\.com\/channel\/(UC[a-zA-Z0-9_-]{22})/;
+        const userUrlRegex = /youtube\.com\/user\/([a-zA-Z0-9_-]+)/;
+        const customUrlRegex = /youtube\.com\/c\/([a-zA-Z0-9_-]+)/;
+      
+        // ✅ Use 'id' consistently instead of 'input'
+        if (id.includes('youtube.com') || id.includes('youtu.be')) {
+      if (type === 'video') {
+        const match = id.match(videoRegex);
+        if (match) id = match[1];
+      } else if (type === 'playlist') {
+        const match = id.match(playlistRegex);
+        if (match) id = match[1];
+      } else if (type === 'channel') {
+        let match;
+        if ((match = id.match(channelUrlRegex))) {
+          id = match[1];
+        } else if ((match = id.match(userUrlRegex))) {
+          id = match[1];
+        } else if ((match = id.match(customUrlRegex))) {
+          id = match[1];
+        } else {
+          // fallback: if input is just ID without URL
+          if (id.startsWith('UC')) {
+            // valid channel ID
+            id = id;
+          }
+        }
+      }
+        }
+      
+        return id;
+      }
+      
+        function getVideoThumbnail(videoId) {
+          const cleanId = extractId(videoId, 'video');
+          return `https://img.youtube.com/vi/${cleanId}/mqdefault.jpg`;
+        }
+        
+       async function getFirstThumbnailFromPlaylist(playlistId) {
+        return new Promise((resolve, reject) => {
+      // Create a temporary hidden player to load the playlist
+      const tempDiv = document.createElement('div');
+      tempDiv.style.cssText = `
+        position: absolute;
+        left: -9999px;
+        top: -9999px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+      `;
+      document.body.appendChild(tempDiv);
+      
+      const player = new YT.Player(tempDiv, {
+        height: '1',
+        width: '1',
+        videoId: '', // Don't set videoId initially
+        playerVars: {
+          listType: 'playlist',
+          list: playlistId,
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0
+        },
+        events: {
+          onReady: (event) => {
+            try {
+              // Wait a bit for playlist to load
+              setTimeout(() => {
+                const playlist = event.target.getPlaylist();
+                console.log('Playlist loaded:', playlistId, 'Videos:', playlist?.length || 0);
+                
+                event.target.destroy();
+                tempDiv.remove();
+                
+                if (playlist && playlist.length > 0) {
+                  const firstVideoId = playlist[0];
+                  resolve(`https://img.youtube.com/vi/${firstVideoId}/mqdefault.jpg`);
+                } else {
+                  // Fallback: try YouTube's official playlist thumbnail API
+                  resolve(`https://i.ytimg.com/vi/${playlistId}/mqdefault.jpg`);
+                }
+              }, 500); // Give it time to load playlist
+            } catch (error) {
+              event.target.destroy();
+              tempDiv.remove();
+              reject(error);
+            }
+          },
+          onError: (event) => {
+            console.warn('Playlist thumbnail error:', event.data, 'for playlist:', playlistId);
+            event.target.destroy();
+            tempDiv.remove();
+            
+            // Graceful fallback - use playlist ID as thumbnail
+            resolve(`https://i.ytimg.com/vi/${playlistId}/mqdefault.jpg`);
+          },
+          onStateChange: (event) => {
+            // Ignore state changes
+          }
+        }
+      });
+        });
+      }
+        
+        function waitForNode(selector, parent = document, timeout = 5000) {
+          return new Promise((resolve, reject) => {
+            const element = document.querySelector(selector);
+            if (element) {
+              return resolve(element);
+            }
+      
+            const observer = new MutationObserver((mutations) => {
+              const node = document.querySelector(selector);
+              if (node) {
+                clearTimeout(timer);
+                observer.disconnect();
+                resolve(node);
+              }
+            });
+      
+            observer.observe(parent, {
+              childList: true,
+              subtree: true
+            });
+            
+            const timer = setTimeout(() => {
+              observer.disconnect();
+              reject(new Error(`Timeout: Element ${selector} not found within ${timeout}ms`));
+            }, timeout);
+          });
+        }
+        
+        function numberToLetter(num) {
+          // Uppercase: 64 + 1 = 65 ('A')
+          return String.fromCharCode(64 + num);
+        }
+        
+        async function renderRows(toRender) {
+          /*
+          <div id="row1" class="grid grid-flow-col auto-cols-max overflow-x-auto gap-4 p-4">
+          </div>
+          <h1 class="font-arimo font-bold font-black text-4xl mb-2">Gaming</h1>
+          */
+          if (!toRender) {
+            return;
+          }
+          
+          toRender.forEach(section => {
+            let id = section.id;
+            
+            if (!id) {
+              warn('Could not render section... No ID!')
+              return
+            }
+            
+            let h1 = document.createElement('h1');
+            h1.className = 'relative font-arimo font-bold font-black text-4xl w-full mb-2';
+            h1.textContent = id;
+            
+            let deleteBtn = document.createElement('button');
+            deleteBtn.className = 'group cursor-pointer z-30 flex justify-center items-center h-10 w-10 aspect-square';
+          
+            let deleteBtnIcon = document.createElement('span');
+            deleteBtnIcon.className = 'material-symbols-outlined transition-all group-hover:text-primary-theme group-hover:animate-wobble duration-300';
+            deleteBtnIcon.innerHTML = 'delete';
+          
+            deleteBtn.appendChild(deleteBtnIcon);
+            
+            /*
+            let editBtn = document.createElement('button');
+            editBtn.className = 'group cursor-pointer z-30 flex justify-center items-center h-10 w-10 aspect-square'
+            
+            let editBtnIcon = document.createElement('span');
+            editBtnIcon.className = 'material-symbols-outlined transition-all group-hover:opacity-75 duration-300';
+            editBtnIcon.innerHTML = 'edit';
+            
+            editBtn.appendChild(editBtnIcon);
+            */
+            
+            let container = document.createElement('div');
+            container.className = 'absolute top-1 right-1 flex flex-row gap-1 px-2 py-1 z-40';
+          
+            //container.appendChild(editBtn);
+            container.appendChild(deleteBtn);
+            
+            h1.appendChild(container);
+            
+            let div = document.createElement('div');
+            div.className = 'grid bg-gray/30 rounded-xl mb-4 min-h-32 grid-flow-col auto-cols-max overflow-x-auto p-1';
+            div.id = id;
+            
+            let mainContent = document.querySelector('.main-content')
+            
+            mainContent.appendChild(h1)
+            mainContent.appendChild(div);
+            
+            // Setup connections:
+            deleteBtn.onclick = () => {
+              openModal('modal_DeleteThing', {
+                element: div,
+                typeSection: 'section'
+              });
+            };
+          });
+        }
+        
+        async function render(toRender, sortBy = 'dontSort') {
+          if (!toRender) {
+            return;
+          }
+      
+          // Group content by sectionId
+          const grouped = toRender.reduce((acc, content) => {
+            if (!content.sectionId) return acc;
+      
+            if (!acc[content.sectionId]) acc[content.sectionId] = [];
+            acc[content.sectionId].push(content);
+            return acc;
+          }, {});
+      
+          // For each section group, sort and render content
+          for (const sectionId in grouped) {
+            let contents = grouped[sectionId];
+      
+            if (sortBy === 'alphabetical') {
+              contents.sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
+            } else if (sortBy === 'date') {
+              contents.sort((a, b) => (a.created || 0) - (b.created || 0));
+            }
+      
+            contents.forEach(content => {
+              let ytId = content.ytId;
+              let type = content.type;
+              let cName = content.name;
+              let cHandle = content.handle;
+              let cImageHtml = content.imageHtml;
+              let parentId = content.sectionId || content.parentId;
+      
+              if (!ytId || !type || !parentId) {
+                return;
+              }
+      
+              let parent = document.getElementById(parentId);
+      
+              if (!parent) {
+                return;
+              }
+      
+              let videoBox;
+      
+              function onClose() {
+                openModal('modal_DeleteThing', { element: videoBox, typeSection: 'content' });
+              }
+      
+              videoBox = createVideoBox({
+                parentElement: parent,
+                url: ytId,
+                className: 'w-40 h-32 bg-gray mx-2',
+                name: cName || 'null',
+                handle: cHandle,
+                type: type || 'video',
+                imageHtml: cImageHtml || ``,
+                opened: function() {
+                  openPage('iframePage', function() {
+                    createPlayer(ytId, type);
+                  });
+                },
+                closed: onClose
+              });
+      
+              console.log(videoBox);
+            });
+          }
+        }
+        
+        async function generateDashboardPage() {
+          const searchInput = document.getElementById('globalSearch');
+          
+          if (searchInput.value.trim() !== '') {
+            searchInput.value = ''
+            currentPage = '';
+          }
+          
+          let rendered = openPage('dashboard');
+          
+          if (!rendered) {
+            return;
+          }
+      
+          let mainContainer = document.querySelector('.main-content');
+      
+          let content = await getAllContent() || [];
+          let sections = await getAllSections() || [];
+          
+          if (sections.length > 0) {
+            await renderRows(sections);
+            console.log('rendered rows');
+          } else {
+            let dashboardAlert = document.createElement('h1');
+            dashboardAlert.className = 'mb-4 text-center text-5xl text-white font-arimo font-bold';
+            dashboardAlert.textContent = "Woah, you've got no rows to display your content! Press the plus button and create a row!";
+            mainContainer.appendChild(dashboardAlert);
+          }
+      
+          if (content.length > 0) {
+            await render(content, 'alphabetical');
+            console.log('rendered content');
+          }
+      
+          // Add separator and add button
+          let separator = document.createElement('div');
+          separator.className = "separator-hz-nm h-1 bg-primary-theme/50 rounded-xl";
+          
+          let button = document.createElement('button');
+          button.onclick = () => openModal('modal_SaveChannel');
+          button.className = 'text-5xl mt-4 aspect-square w-32 h-32 bg-primary-theme rounded-xl';
+          button.textContent = '+';
+          
+          let divAlert = document.createElement('div');
+          divAlert.className = 'alert alert-danger min-h-full flex items-center mt-2 ml-2'
+          divAlert.textContent = "If you google a youtuber and it gives something like '@handle' go to https://commentpicker.com/youtube-channel-id.php to convert it into a channel ID";
+      
+          let divAlert2 = document.createElement('div');
+          divAlert2.className = 'alert alert-danger flex items-center min-h-full'
+          divAlert2.textContent = "For content to function properly, run ChannelHop inside of a in browser HTML viewer. Running this off of your computer won't play videos.";
+        
+          let container = document.createElement('div');
+          container.className = 'flex mb-4 justify-center items-center';
+        
+          mainContainer.appendChild(separator);
+          mainContainer.appendChild(container);
+          container.appendChild(button);
+          container.appendChild(divAlert);
+          mainContainer.appendChild(divAlert2);
+        }
+        
+        async function generateExplorePage() {
+          let rendered = openPage('explore');
+                  
+          if (!rendered) {
+            return;
+          }        
+                  
+          const generateRow = function(id, header, parentElement) {
+            let h1 = document.createElement('h1');
+            h1.className = "font-arimo font-bold font-black text-4xl mb-2"
+            h1.textContent = header;
+            
+            let div = document.createElement('div')
+            div.id = id 
+            div.className="grid bg-gray/30 rounded-xl mb-4 min-h-32 grid-flow-col auto-cols-max overflow-x-auto p-1"
+            
+            parentElement.appendChild(h1);
+            parentElement.appendChild(div);
+            
+            return div;
+          }
+          
+          const makeContent = function(url, name, handle, type = "channel", parent) {
+            createVideoBox({
+              parentElement: parent,
+              url: url,
+              className: 'w-40 h-32 bg-gray mx-2',
+              name: name,
+              handle: handle,
+              type: type,
+              controls: 0,
+            });
+          }
+        
+          let mainContainer = document.querySelector('.main-content');
+      
+          let row1 = generateRow('row1', 'Gaming', mainContainer);
+          let row2 = generateRow('row2', 'You know who they are.', mainContainer);
+          let row3 = generateRow('row3', `"Woah, that's interesting."`, mainContainer);
+          let row4 = generateRow('row4', `"But that's just a theory, a"`, mainContainer);
+          let row5 = generateRow('row5', 'Socksfor1', mainContainer);
+          let row6 = generateRow('row6', 'Oh no, why are they here?', mainContainer);
+          let row7 = generateRow('row7', 'Wow they changed alot', mainContainer)
+          
+          function setUpRow1(myRow) {
+            makeContent('UCS5Oz6CHmeoF7vSad0qqXfw', 'DanTDM', '@dantdm', 'channel', myRow);
+            makeContent('UCn4RkjqDN4UE0Uy3y1-K6_w', 'Laughability', '@Laughability', 'channel', myRow)
+            makeContent('UCsA57c8OT0JfnX_yL3Ev1ZQ', 'Koopekool', '@koopekool', 'channel', myRow);
+            makeContent('UCke6I9N4KfC968-yRcd5YRg', 'SSundee', '@ssundee', 'channel', myRow);
+            makeContent('UCm-X6o81nRsXQTmqpyArkBQ', 'Flamingo', '@flamingo', 'channel', myRow)
+            makeContent('UCJZam2u1G0syq3kyqrCXrNw', 'PrestonPlayz', '@prestonplayz', 'channel', myRow);
+            makeContent('UCjiXtODGCCulmhwypZAWSag', 'Jynxzi', '@jynxzi', 'channel', myRow);
+            makeContent('UCzEy7pi3B7TIS9cn_sdKK9A', 'GrayStillPlays', '@graystillplays', 'channel', myRow);
+          }
+          
+          function setUpRow2(myRow) {
+            makeContent('UCX6OQ3DkcsbYNE6H8uQQuVA', 'MrBeast', '@mrbeast', 'channel', myRow);
+            makeContent('UC7_YxT-KID8kRbqZo7MyscQ', 'Markiplier', '@markiplier', 'channel', myRow);
+            makeContent('UC-lHJZR3Gqxm24_Vd_AJ5Yw', 'PewDiePie', '@pewdiepie', 'channel', myRow);
+            makeContent('UCYzPXprvl5Y-Sf0g4vX-m6g', 'Jacksepticeye', '@jacksepticeye', 'channel', myRow);
+            makeContent('UCTkXRDQl0luXxVQrRQvWS6w', 'Dream', '@dream', 'channel', myRow);
+          }
+          
+          function setUpRow3(myRow) {
+            makeContent('UCsXVk37bltHxD1rDPwtNM8Q', 'Kurzgesagt', '@kurzgesagt', 'channel', myRow);
+            makeContent('UC9Jyeg18um38Pumik7rZbVw', 'CliffordEpic', '@cliffordepic', 'channel', myRow);
+            makeContent('UCHnyfMqiRRG1u-2MsSQLbXA', 'Veritasium', '@veritasium', 'channel', myRow);
+          }
+          
+          function setUpRow4(myRow) {
+            makeContent('UCo_IB5145EVNcf8hw1Kku7w', 'Game Theory', '@gametheory', 'channel', myRow);
+            makeContent('UCHYoe8kQ-7Gn9ASOlmI0k6Q', 'Food Theory', '@foodtheory', 'channel', myRow);
+            makeContent('UC3sznuotAs2ohg_U__Jzj_Q', 'Film Theory', '@filmtheory', 'channel', myRow);
+            makeContent('UCd4t3EEUy0LUOM4MTdjpNHA', 'Style Theory', '@styletheorists', 'channel', myRow);
+            
+          }
+          
+          function setUpRow5(myRow) {
+            makeContent('UCsEgeyBfOnGGBpjIvkDJbWg', 'Socksfor1', '@socksfor1', 'channel', myRow);
+            makeContent('UC-XTuGOHIF7vWvbhJZ56wbw', 'Socks Games', '@socksfor2', 'channel', myRow);
+            makeContent('UCXMwCQVey4PhdWFJ6WhAVhA', 'Socks Animations', '@sockstudios6010', 'channel', myRow);
+      
+          }
+          
+          function setUpRow6(myRow) {
+            makeContent('UCK5vUVoJsEVc7JeXQ8XiX7w', 'Grox', '@groxmc', 'channel', myRow);
+          }
+          
+          function setupRow7(myRow) {
+            makeContent('UC6nSFpj9HTCZ5t-N3Rm3-HA', 'Vsauce', '@vsauce', 'channel', myRow);
+          }
+           
+          setUpRow1(row1);
+          setUpRow2(row2);
+          setUpRow3(row3);
+          setUpRow4(row4);
+          setUpRow5(row5);
+          setUpRow6(row6);
+          setupRow7(row7);
+        }
+        
+        async function loadAvatarForBox(name, type, container, fallbackHtml = '') {
+          try {
+            //console.log(`Getting pfp from name: ${name}, Full link: https://unavatar.io/youtube/${name}`)
+            let response = await fetch(`https://unavatar.io/youtube/${name}`);
+      
+            if (response.ok) {
+             // console.log(`✅ Got pfp from name: ${name}`)
+              const blob = await response.blob();
+              const imageUrl = URL.createObjectURL(blob);
+              
+              //console.log(`Image url from, '${name}: ${imageUrl}`);
+        
+              container.innerHTML = `
+                <div class="rounded-full w-16 h-16 aspect-square overflow-hidden">
+                  <img src="${imageUrl}" class="w-full h-full object-cover" alt="Avatar" 
+                   onerror="this.parentElement.innerHTML='<span class=\\'material-symbols-outlined symbols-noFill text-6xl\\'>${type === 'channel' ? 'account_circle' : 'play_circle'}</span>'">
+                </div>
+              `;
+              return;
+              }
+          } catch (error) {
+            console.warn('Avatar fetch failed:', error);
+          }
+        
+          // Fallback
+          if (fallbackHtml) {
+            container.innerHTML = fallbackHtml;
+          } else {
+            const icon = type === 'channel' ? 'account_circle' : 'play_circle';
+            container.innerHTML = `
+              <div class="flex items-center justify-center h-full w-full">
+                <span class="material-symbols-outlined symbols-noFill text-6xl">${icon}</span>
+              </div>
+            `;
+          }
+        }
+        
+        document.addEventListener('click', (event) => {
+          // Check if click is inside a video box or its dropdown menu
+          const isInsideVideoBox = event.target.closest('.w-40, .w-64, .dropdown-menu');
+          
+          const isInsideModal = event.target.closest('#modalOverlay');
+          
+          if (!isInsideVideoBox && !isInsideModal) {
+            // Find all dropdown menus that are open and close them
+            document.querySelectorAll('div.absolute.opacity-100').forEach(dropdown => {
+              dropdown.classList.remove('opacity-100');
+              dropdown.classList.add('-translate-y-full');
+            });
+          }
+        });
+      
+        
+        function createVideoBox(info) {
+          if(!info || !info.parentElement) {
+            return null;
+          }
+          
+          let url = info.url || '';
+          let parentContainer = info.parentElement; 
+          let className = info.className || `w-64 h-32`;
+          className += ' relative bg-gray rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-0.5 dropdown-menu';
+          let name = info.name || 'No Name';
+          let handle = info.handle || 'null';
+          let infoImage = info.imageHtml;
+          let preType = info.type || 'channel';
+          let controls = (info.controls !== undefined && info.controls !== null) ? info.controls : 1;
+          let type = preType.toLowerCase();
+          let opened = info.opened || function() {
+            openPage('iframePage', function() {
+              createPlayer(info.url, info.type);
+            });
+          };
+          let closed = info.closed || function() {};
+          
+          let imageHtml = infoImage;
+          
+          // Create the element properly
+          let div = document.createElement("div");
+          div.id = name;
+          div.className = className; 
+          div.innerHTML = '';
+          
+          let iconContainer = document.createElement('div');
+          iconContainer.className = 'absolute top-0 left-0 w-full h-[75%] flex items-center justify-center z-10 pointer-events-none';
+          iconContainer.innerHTML = imageHtml;
+      
+          let overlay = document.createElement('button');
+          overlay.className = 'absolute top-0 left-0 h-[75%] w-full bg-black opacity-0 transition-opacity duration-180 ease-in-out hover:opacity-10 z-20'
+          
+          let bottomBar = document.createElement('div');
+          bottomBar.className = 'absolute font-arimo z-20 font-black flex items-center bottom-0 left-0 h-[25%] w-full bg-[#555] rounded-bl-xl rounded-br-xl'
+          
+          let textSpan = document.createElement('span');
+          // Apply the font, sizing, and nowrap to the child span
+          textSpan.className = 'text-[clamp(0.5rem,5vw,1rem)] truncate w-full text-center font-arimo font-black whitespace-nowrap px-2';
+          textSpan.textContent = name;
+      
+          bottomBar.appendChild(textSpan);
+          
+          let deleteBtn
+          let deleteBtnIcon
+          
+          let menuBtn;
+          
+          let copyBtn;
+          
+          let dropdownMenu;
+          let miniMenu;
+          
+          //let dropdownMenu_Edit;
+          
+          let dropdownMenu_Relocate;
+          
+          const createDropdownItem = function(icon, text) {
+            let button = document.createElement('button');
+            button.className = 'flex w-[75%] h-10 items-center px-4 py-2.5 rounded-xl font-medium text-white active:scale-95 backdrop-blur-sm transition-all duration-200 select-none group hover:opacity-75';
+      
+            let iconSpan = document.createElement('span');
+            iconSpan.className = 'material-symbols-outlined mr-2';
+            iconSpan.innerHTML = icon;
+      
+            let separator = document.createElement('div');
+            separator.className = 'separator-nm mr-2 flex-shrink-0'; 
+        
+            let textSpan = document.createElement('span');
+            textSpan.className = 'text-sm font-arimo font-semibold'; 
+            textSpan.innerHTML = text;
+      
+            button.appendChild(iconSpan);
+            button.appendChild(separator);
+            button.appendChild(textSpan);
+        
+            return button;
+          }
+          
+          if (controls == 1) {
+            deleteBtn = document.createElement('button');
+            deleteBtn.className = 'z-[45] hover:bg-white/90 hover:border-primary-theme hover:cursor-pointer transition-all hover:text-primary-theme flex justify-center items-center h-8 w-8 aspect-square bg-red-500/90 rounded-full transition-all shadow-lg border border-white/20';
+            
+            let deleteBtnIcon = document.createElement('span');
+            deleteBtnIcon.className = 'material-symbols-outlined hover:animate-wobble duration-300';
+            deleteBtnIcon.innerHTML = 'delete'
+            
+            deleteBtn.appendChild(deleteBtnIcon);
+            
+            miniMenu = document.createElement('div');
+            miniMenu.className = 'group absolute top-2 right-2 z-[40] flex flex-col gap-1 transition-all duration-200';
+        
+            menuBtn = document.createElement('button');
+            menuBtn.className = 'z-[45] group cursor-pointer flex justify-center items-center h-8 w-8 aspect-square bg-black/50 hover:bg-black/70 rounded-full transition-all backdrop-blur-sm border border-white/20 shadow-lg';
+            
+            let menuBtnIcon = document.createElement('span');
+            menuBtnIcon.className = 'material-symbols-outlined'
+            menuBtnIcon.innerHTML = 'more_vert'
+          
+            menuBtn.appendChild(menuBtnIcon);
+            
+            dropdownMenu = document.createElement('div');
+            dropdownMenu.className = 'overflow-hidden opacity-0 absolute top-0 left-0 h-[75%] w-full bg-darkGray z-30 justify-center items-start transform transition-all duration-300 -translate-y-full';
+            
+            dropdownMenu_Relocate = createDropdownItem('tab_move', 'Relocate...');
+            dropdownMenu_Edit = createDropdownItem('edit', 'Edit...');
+            
+            dropdownMenu.appendChild(dropdownMenu_Relocate);
+            dropdownMenu.appendChild(dropdownMenu_Edit);
+                      
+            // Assemble mini menu
+            miniMenu.appendChild(menuBtn);
+            miniMenu.appendChild(deleteBtn);
+          } else {
+            copyBtn = document.createElement('button');
+            copyBtn.className = 'z-[45] group cursor-pointer flex justify-center items-center h-8 w-8 aspect-square bg-black/50 hover:bg-black/70 rounded-full transition-all backdrop-blur-sm border border-white/20 shadow-lg hover:opacity-75 transition-opacity cursor-pointer z-30 flex justify-center items-center absolute top-2 right-2 h-10 w-10 aspect-square'
+          
+            copyBtnIcon = document.createElement('span');
+            copyBtnIcon.className = 'material-symbols-outlined';
+            copyBtnIcon.innerHTML = 'content_copy';
+            
+            copyBtn.appendChild(copyBtnIcon);
+          }
+          
+          if (dropdownMenu) {
+            div.appendChild(dropdownMenu);
+          }
+          
+          if (miniMenu) {
+            div.appendChild(miniMenu);
+          }
+          
+          if (copyBtn) {
+            div.appendChild(copyBtn);
+          }
+          
+          div.appendChild(overlay);
+          div.appendChild(bottomBar);
+          div.appendChild(iconContainer);
+          
+          if (controls == 1) {
+            deleteBtn.setAttribute('data-action', 'delete');
+            menuBtn.setAttribute('data-action', 'menu');
+            dropdownMenu_Relocate.setAttribute('data-action', 'relocate');
+            dropdownMenu_Edit.setAttribute('data-action', 'edit');
+          }
+        
+          overlay.setAttribute('data-action', 'open');
+          
+          let dropdownActive = false
+          
+          div.addEventListener('click', (event) => {
+            const btn = event.target.closest('button[data-action]');
+            if (!btn) return;
+      
+            const action = btn.getAttribute('data-action');
+      
+            if (action === 'delete') {
+              if (dropdownActive == false) {
+                closed();
+              }
+            } else if (action === 'menu') {
+              const dropdown = div.querySelector('div.absolute');
+              
+              if (!dropdown) return;
+              
+              dropdownActive = !dropdownActive;
+              
+              dropdown.classList.toggle('opacity-100');
+              dropdown.classList.toggle('-translate-y-full');
+              
+              menuBtn.classList.toggle('bg-black/0');
+              menuBtn.classList.toggle('border');
+              menuBtn.classList.toggle('shadow-lg');
+              menuBtn.classList.toggle('backdrop-blur-sm');
+              menuBtn.classList.toggle('hover:bg-black/0');
+              menuBtn.classList.toggle('hover:border');
+              
+              deleteBtn.classList.toggle('opacity-0');
+              deleteBtn.classList.toggle('pointer-events-none');
+            } else if (action === 'open') {
+              opened();
+            } else if (action === 'relocate') {
+              openModal('modal_Relocate', {
+                id: name,
+              });
+            } else if (action === 'edit') {
+              openModal('modal_Edit', {
+                id: name,
+              });
+            }
+          });
+          
+          if (copyBtn) {
+            copyBtn.addEventListener('click', (event) => {
+              openModal('modal_CopyItem', {copyUrl: url, copyName: name, copyHandle: handle});
+            });
+          }
+          
+         if (type === 'playlist') {
+        const playlistId = extractId(url, 'playlist');
+        
+        (async () => {
+      try {
+        // Main icon (playlist play button)
+        iconContainer.innerHTML = `
+          <div class="w-full h-full flex items-center justify-center overflow-hidden">
+            <span class="material-symbols-outlined text-6xl text-white/90 drop-shadow-2xl">playlist_play</span>
+          </div>
+        `;
+        
+        console.log('🎵 Loading playlist thumbnail for:', playlistId);
+        const thumbnailUrl = await getFirstThumbnailFromPlaylist(playlistId);
+        
+        // Background image
+        const bgDiv = document.createElement('div');
+        bgDiv.className = 'absolute top-0 left-0 w-full h-[75%] z-5 pointer-events-none';
+        
+        const bgImg = document.createElement('img');
+        bgImg.src = thumbnailUrl;
+        bgImg.className = 'w-full h-full object-cover opacity-30';
+        bgImg.alt = 'Playlist preview';
+        
+        bgImg.onload = () => console.log('✅ BG loaded:', thumbnailUrl);
+        bgImg.onerror = () => {
+          console.warn('❌ BG failed:', thumbnailUrl);
+          bgImg.remove();
+        };
+        
+        bgDiv.appendChild(bgImg);
+        div.appendChild(bgDiv);
+        
+      } catch (error) {
+        console.error('Playlist thumbnail failed:', error);
+        
+        // Fallback: just show playlist icon
+        iconContainer.innerHTML = `
+          <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/80 to-blue-500/80">
+            <span class="material-symbols-outlined text-6xl text-white drop-shadow-2xl">playlist_play</span>
+          </div>
+        `;
+      }
+        })();
+      } else if (type == 'channel') {
+            loadAvatarForBox(handle, type, iconContainer, '');
+            
+            // Add thumbnail background ASYNC
+            (async () => {
+              try {
+                const latestVideoId = await getLatestVideoIdFromChannel(extractId(url, 'channel'));
+                const thumbnailUrl = getVideoThumbnail(latestVideoId);
+        
+                let bgDiv = document.createElement('div');
+                bgDiv.className = 'absolute top-0 left-0 w-full h-[75%] object-cover z-5 pointer-events-none';
+        
+                let bgImg = document.createElement('img');
+                bgImg.src = thumbnailUrl;
+                bgImg.className = 'w-full h-full object-cover opacity-30 blur-xs';
+                bgImg.alt = 'Channel background';
+                bgImg.onerror = () => {
+                  bgImg.style.display = 'none'; // Hide failed background
+                };
+        
+                bgDiv.appendChild(bgImg);
+                div.appendChild(bgDiv);
+                //console.log(`✅ Channel background loaded for ${name}: ${thumbnailUrl}`);
+              } catch (error) {
+                //console.warn(`Failed to load channel background for ${name}:`, error);
+                // No fallback needed - just skip background
+              }
+            })();
+          } else if (type == 'video') {
+            let imgUrl = getVideoThumbnail(url);
+            console.log(url);
+            console.log(imgUrl)
+            iconContainer.innerHTML = `
+              <div class="w-full h-full flex items-center justify-center">
+                <img src="${imgUrl}" class="w-full h-full object-cover rounded-t-xl" 
+                 alt="Video thumbnail"
+                 onerror="this.parentElement.innerHTML='<span class=\\'material-symbols-outlined symbols-noFill text-6xl\\'>play_circle</span>'">
+              </div>
+            `;
+          }
+          
+          // Append it
+          parentContainer.appendChild(div);
+          
+          return div; 
+        }
+      
+        function makeRowMenuBtn(parentElement, className = "relative w-32 h-32 aspect-square bg-primary-theme rounded-xl") {
+          let parentContainer = parentElement; 
+      
+          // Create the element properly
+          let btn = document.createElement("button"); 
+          btn.className = className; 
+          btn.innerHTML = '<span class="text-6xl material-symbols-outlined">menu</span>';
+          
+          parentContainer.appendChild(btn);
+          return btn; 
+        }
+    </script>
+    <script id="player.js">
+      let player;
+      let currentVideoIndex = 0;
+      let playlistLength = 0;
+      let playerReady = false;
+      
+      // Create YouTube player
+      function createPlayer(linkOrId = "dQw4w9WgXcQ", type = "channel") {
+        window.currentPlayerType = type;
+        
+        // Destroy existing player
+        if (player) {
+          player.destroy()
+          player = null;
+          playerReady = false;
+        }
+      
+        const id = extractId(linkOrId, type);
+        
+        const playerOptions = {
+          height: "520",
+          width: "1069",
+          events: {
+            onReady: onPlayerReady,
+            onStateChange: onPlayerStateChange,
+            onError: onPlayerError
+          },
+          playerVars: {
+            playsinline: 1,
+            enablejsapi: 1,
+            origin: window.location.protocol === 'file:' ? '*' : window.location.origin,
+            fs: 1,
+            controls: 1,
+            rel: 0,
+            modestbranding: 1
+          },
+        };
+      
+        if (type === "video") {
+          playerOptions.videoId = id;
+        } else if (type === "playlist" || type === "channel") {
+          let playlistId = id;
+          if (type === "channel") {
+            playlistId = id.replace(/^UC/, "UU");
+          }
+          playerOptions.playerVars.listType = "playlist";
+          playerOptions.playerVars.list = playlistId;
+          playlistLength = 0;
+          currentVideoIndex = 0;
+        } else {
+          console.error("Invalid type provided:", type);
+          return;
+        }
+      
+        player = new YT.Player("player", playerOptions);
+        console.log("Player created for:", id, type);
+      }
+      
+      function openPlayerForVideo(ytId, type) {
+        openPage('iframePage');
+        if (!player) {
+          createPlayer(ytId, type);
+        } else {
+          globalPlayer.loadVideoById(extractId(ytId, type));
+        }
+      }
+
+      // Player ready callback
+      function onPlayerReady(event) {
+        // Access the iframe and add necessary attributes manually if not present
+        const iframe = document.getElementById('player');
+        iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+        
+        console.log("Player ready!");
+        playerReady = true;
+        
+        const videoData = player.getVideoData();
+        let mainContainer = document.querySelector('.main-content');
+        let titleParagraph = mainContainer.querySelector('p');
+        if (titleParagraph) {
+          titleParagraph.textContent = videoData.author || 'Video';
+        }
+        
+        // Get playlist length for channels/playlists
+        if (player.getPlaylist) {
+          const playlist = player.getPlaylist();
+          playlistLength = playlist ? playlist.length : 0;
+          console.log("Playlist length:", playlistLength);
+        }
+        
+        updateButtons();
+        setupPlayerControls(); // Setup controls immediately
+        
+        player.playVideo();
+      }
+      
+      // Player state change callback
+      function onPlayerStateChange(event) {
+        console.log("Player state changed:", event.data);
+        
+        switch(event.data) {
+          case YT.PlayerState.PLAYING:
+            currentVideoIndex = player.getPlaylistIndex() || 0;
+            updateButtons();
+            
+            // Get video title and channel name
+            const videoData = player.getVideoData();
+            let displayTitle = videoData.title || "Unknown Title";
+            
+            displayTitle = `${videoData.author || "???"} | ${videoData.title || "Video"}`;
+
+            let mainContainer = document.querySelector('.main-content');
+            let titleParagraph = mainContainer.querySelector('p');
+            if (titleParagraph) {
+              titleParagraph.textContent = displayTitle;
+            }
+      
+            break;
+            
+          case YT.PlayerState.PAUSED:
+            break;
+            
+          case YT.PlayerState.ENDED:
+            updateButtons();
+            break;
+        }
+      }
+      
+      function onPlayerError(event) {
+        console.error("Player error:", event.data);
+      }
+      
+      // Update navigation buttons state
+      function updateButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const gotoInput = document.getElementById("gotoIndex");
+        const maxIndex = document.getElementById('iframePage_maxIndex');
+        const mIWrapper = document.getElementById('iframePage_indexWrapper');
+      
+        if (!prevBtn || !nextBtn || !gotoInput || !maxIndex || ! mIWrapper) return;
+      
+        mIWrapper.style.display = 'none';
+      
+        // Single video - disable navigation
+        if (playlistLength <= 1) {
+          prevBtn.disabled = true;
+          nextBtn.disabled = true;
+          gotoInput.disabled = true;
+          gotoInput.max = 1;
+          maxIndex.textContent = '1';
+          mIWrapper.style.display = 'none';
+          return;
+        }
+        
+        mIWrapper.style.display = 'flex';
+        
+        maxIndex.textContent = playlistLength;
+      
+        // Playlist navigation
+        prevBtn.disabled = currentVideoIndex <= 0;
+        nextBtn.disabled = currentVideoIndex >= playlistLength - 1;
+        gotoInput.disabled = false;
+        gotoInput.max = playlistLength;
+        gotoInput.value = currentVideoIndex + 1;
+      }
+      
+      // Previous video
+      function previousVideo() {
+        if (player && player.previousVideo && playerReady) {
+          player.previousVideo();
+        }
+      }
+      
+      // Next video  
+      function nextVideo() {
+        if (player && player.nextVideo && playerReady) {
+          player.nextVideo();
+        }
+      }
+      
+      // Go to specific video
+      function goToVideo() {
+        if (!player || !playerReady) {
+          console.warn("Player not ready");
+          return;
+        }
+      
+        const input = document.getElementById("gotoIndex");
+        const index = parseInt(input.value, 10);
+        
+        if (isNaN(index) || index < 1 || index > playlistLength) {
+          alert(`Invalid video number (1-${playlistLength})`);
+          return;
+        }
+        
+        player.playVideoAt(index - 1);
+      }
+      
+      function setupPlayerControls() {
+        console.log("Setting up player controls...");
+        
+        setTimeout(() => {
+          // Get button references
+          const prevBtn = document.getElementById("prevBtn");
+          const nextBtn = document.getElementById("nextBtn");
+          const gotoBtn = document.getElementById("gotoBtn");
+          const gotoInput = document.getElementById("gotoIndex");
+      
+          // Clone buttons ONCE to remove old listeners
+          [prevBtn, nextBtn, gotoBtn].forEach(btn => {
+            if (btn && btn.parentNode) {
+              const newBtn = btn.cloneNode(true);
+              btn.parentNode.replaceChild(newBtn, btn);
+            }
+          });
+      
+          // Get fresh references after cloning
+          requestAnimationFrame(() => {
+            const freshPrevBtn = document.getElementById("prevBtn");
+            const freshNextBtn = document.getElementById("nextBtn");
+            const freshGotoBtn = document.getElementById("gotoBtn");
+            const freshGotoInput = document.getElementById("gotoIndex");
+      
+            // Add listeners (no attribute checks needed)
+            if (freshPrevBtn) freshPrevBtn.addEventListener("click", previousVideo);
+            if (freshNextBtn) freshNextBtn.addEventListener("click", nextVideo);
+            if (freshGotoBtn) freshGotoBtn.addEventListener("click", goToVideo);
+            
+            if (freshGotoInput) {
+              freshGotoInput.addEventListener("keypress", (e) => {
+                if (e.key === "Enter") goToVideo();
+              });
+              freshGotoInput.max = playlistLength;
+            }
+      
+            updateButtons();
+          });
+        }, 100);
+      }
+      
+      // Async function to get the latest video ID from a channel via the YouTube IFrame API player playlist
+      async function getLatestVideoIdFromChannel(channelId) {
+        return new Promise((resolve, reject) => {
+          // Convert channelId to uploads playlistId by replacing UC with UU
+          const uploadsPlaylistId = channelId.replace(/^UC/, 'UU');
+      
+          // Create a temporary hidden player to load the uploads playlist
+          const tempDiv = document.createElement('div');
+          tempDiv.style.position = 'absolute';
+          tempDiv.style.left = '-9999px';
+          document.body.appendChild(tempDiv);
+      
+          const player = new YT.Player(tempDiv, {
+            height: '0',
+            width: '0',
+            playerVars: {
+              listType: 'playlist',
+              list: uploadsPlaylistId,
+              index: 1,
+              autoplay: 0,
+              controls: 0,
+            },
+            events: {
+              onReady: (event) => {
+                // Get the playlist (array of video IDs)
+                const playlist = event.target.getPlaylist();
+      
+                // The first video in uploads playlist is the most recent upload
+                const latestVideoId = playlist && playlist.length > 0 ? playlist[0] : null;
+      
+                event.target.destroy();
+                tempDiv.remove();
+      
+                if (latestVideoId) {
+                  resolve(latestVideoId);
+                } else {
+                  reject(new Error('No videos found in playlist'));
+                }
+              },
+              onError: (event) => {
+                event.target.destroy();
+                tempDiv.remove();
+                reject(new Error('YouTube player error: ' + event.data));
+              }
+            }
+          });
+        });
+      }
+      
+      // Robust MutationObserver for controls
+      function initPlayerControlsObserver() {
+        const observer = new MutationObserver((mutations) => {
+          let controlsAdded = false;
+          
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+              mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === 1) {
+                  if (node.id === 'videoControls' || 
+                      node.querySelector?.('#videoControls')) {
+                    controlsAdded = true;
+                  }
+                }
+              });
+            }
+          });
+          
+          if (controlsAdded) {
+            console.log("🎮 Controls detected, setting up...");
+            setupPlayerControls();
+          }
+        });
+      
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      
+        // Initial check
+        setupPlayerControls();
+      }
+      
+      // Initialize when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          initPlayerControlsObserver();
+        });
+      } else {
+        initPlayerControlsObserver();
+      }
+      
+      // Expose globally
+      window.createPlayer = createPlayer;
+      window.previousVideo = previousVideo;
+      window.nextVideo = nextVideo;
+      window.goToVideo = goToVideo;
+      window.getLatestVideoIdFromChannel;
+      window.playerReady = () => playerReady;
+    </script>
+    <script id="search.js">
+      document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('globalSearch');
+      
+        if (!searchInput) return;
+        
+        let searchTimeout;
+      
+        searchInput.addEventListener('input', async (e) => {
+          clearTimeout(searchTimeout);
+        
+          searchTimeout = setTimeout(async () => {
+            const query = e.target.value.trim().toLowerCase();
+          
+            if (query.length === 0) {
+              // No search query, show full dashboard
+              currentPage = '';
+              await generateDashboardPage();
+              return;
+            }
+            
+            currentPage = '';
+          
+            // Filter and render search results
+            await performSearch(query);
+          }, 250); // Debounce 250ms
+        });
+      
+        // Clear search on Escape key
+        searchInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            searchInput.value = '';
+            generateDashboardPage();
+            searchInput.blur();
+          }
+        });
+      });
+      
+      async function performSearch(query) {
+        openPage('dashboard');
+        const mainContainer = document.querySelector('.main-content');
+      
+        // Clear existing content
+        mainContainer.innerHTML = `
+          <div class="text-center py-12">
+            <div class="text-6xl material-symbols-outlined text-primary-theme mb-4">search</div>
+            <h1 class="text-3xl font-bold font-arimo mb-2">Searching for "${query}"</h1>
+            <p class="text-white/60">Finding results across your saved content...</p>
+          </div>
+          <div class="separator-hz-nm">
+        `;
+      
+        try {
+          const allContent = await getAllContent();
+          const allSections = await getAllSections();
+        
+          // Filter content by name (case insensitive)
+          const matchingContent = allContent.filter(content => 
+            content.name?.toLowerCase().includes(query) //||
+            //content.handle?.toLowerCase().includes(query)
+          );
+      
+          if (matchingContent.length === 0) {
+            mainContainer.innerHTML += `
+              <div class="text-center py-12">
+                <div class="text-5xl material-symbols-outlined text-white/30 mb-4">video_library</div>
+                <h2 class="text-2xl font-bold text-white mb-2">No results found</h2>
+                <p class="text-white/50">Try searching for something else or add new content!</p>
+              </div>
+            `;
+            return;
+          }
+      
+          // Group results by section for better UX
+          const groupedResults = matchingContent.reduce((acc, content) => {
+            const sectionId = content.sectionId || 'Uncategorized';
+            if (!acc[sectionId]) acc[sectionId] = [];
+            acc[sectionId].push(content);
+            return acc;
+          }, {});
+      
+          // Render sections with matching content
+          for (const [sectionId, contents] of Object.entries(groupedResults)) {
+            const sectionName = sectionId === 'Uncategorized' ? 'Uncategorized' : 
+                             allSections.find(s => s.id === sectionId)?.id || sectionId;
+      
+            // Section header
+            const sectionHeader = document.createElement('h2');
+            sectionHeader.className = 'font-arimo font-bold text-2xl mt-8 mb-4 flex items-center gap-2 text-primary-theme';
+            sectionHeader.innerHTML = `
+              ${sectionName} 
+              <span class="text-sm text-white/60 bg-white/10 px-2 py-1 rounded-full">${contents.length}</span>
+            `;
+            mainContainer.appendChild(sectionHeader);
+      
+            // Content container
+            const contentContainer = document.createElement('div');
+            contentContainer.className = 'grid bg-gray/30 rounded-xl mb-6 min-h-32 grid-flow-col auto-cols-max overflow-x-auto p-2';
+            contentContainer.id = `search-${sectionId}`;
+      
+            mainContainer.appendChild(contentContainer);
+      
+            // Render matching content
+            contents.forEach(content => {
+              createVideoBox({
+                parentElement: contentContainer,
+                url: content.ytId,
+                className: 'w-40 h-32 bg-gray mx-2',
+                name: content.name,
+                handle: content.handle,
+                type: content.type,
+                opened: () => {
+                  //openPage('iframePage', () => createPlayer(content.ytId, content.type));
+                  openPlayerForVideo();
+                },
+                closed: async () => {
+                  openModal('modal_DeleteThing', {
+                    contentId: content.name,
+                    typeSection: 'content'
+                  });
+                  window.searching = true;
+                }
+              });
+            });
+          }
+      
+          // Add clear search button
+          const clearBtnContainer = document.createElement('div');
+          clearBtnContainer.className = 'flex justify-center mt-12';
+          clearBtnContainer.innerHTML = `
+            <button onclick="document.getElementById('globalSearch').value=''; generateDashboardPage();" 
+              class="bg-primary-theme hover:brightness-110 px-8 py-3 rounded-xl font-bold text-white text-lg shadow-lg shadow-primary-theme/30 transition-all">
+              Clear Search & Show All
+            </button>
+          `;
+          mainContainer.appendChild(clearBtnContainer);
+        } catch (error) {
+         console.error('Search error:', error);
+          mainContainer.innerHTML += `
+            <div class="text-center py-12 text-red-400">
+              <div class="text-5xl material-symbols-outlined mb-4">error</div>
+              <p>Search failed. Please try again.</p>
+            </div>
+          `;
+        }
+      }
+      
+      // Expose performSearch globally for the clear button
+      window.performSearch = performSearch;
+    </script>
+    <script id="export-import.js">
+      async function setupExportImportListeners() {
+        // Export All Data
+        const exportAllBtn = document.getElementById('exportAllBtn');
+        if (exportAllBtn) {
+          exportAllBtn.addEventListener('click', async () => {
+            try {
+              showStatus('Exporting all data...', 'info');
+              const data = await exportAllData();
+              const jsonString = JSON.stringify(data, null, 2);
+              document.getElementById('exportOutput').value = jsonString;
+              showStatus(`✅ Exported ${data.data.sections.length} sections & ${data.data.content.length} items successfully!`, 'success');
+              //copyToClipboard(jsonString);
+            } catch (error) {
+              showStatus(`❌ Export failed: ${error.message}`, 'error');
+            }
+          });
+        }
+      
+        // Export Sections Only
+        const exportSectionsBtn = document.getElementById('exportSectionsBtn');
+        if (exportSectionsBtn) {
+          console.log(exportSectionsBtn === null);
+          exportSectionsBtn.addEventListener('click', async () => {
+            try {
+              showStatus('Exporting sections...', 'info');
+              const sections = await getAllSections();
+              const jsonString = JSON.stringify({
+                data: {
+                  sections
+                }
+              }, null, 2);
+    
+              const exportOutput = document.getElementById('exportOutput');
+              exportOutput.value = jsonString;
+
+              // Auto-select all text for easy copying
+              requestAnimationFrame(() => {
+                console.log(1)
+                requestAnimationFrame(() => {
+                  exportOutput.focus();
+                  exportOutput.select();
+                  exportOutput.setSelectionRange(0, 99999); // Fallback for mobile
+          
+                  // Dispatch input event to trigger any listeners
+                  exportOutput.dispatchEvent(new Event('input', { bubbles: true }));
+                  
+                  showStatus(`✅ Exported ${sections.length} sections! (Text selected)`, 'success');
+                  copyToClipboard(jsonString);
+                });
+              });
+              
+              showStatus(`✅ Exported ${sections.length} sections!`, 'success');
+              copyToClipboard(jsonString);
+            } catch (error) {
+              showStatus(`❌ Export failed: ${error.message}`, 'error');
+              console.warn(`❌ Export failed: ${error.message}`)
+            }
+          });
+        }
+      
+        // Import Data
+        const importBtn = document.getElementById('importBtn');
+        if (importBtn) {
+          importBtn.addEventListener('click', async () => {
+            const importText = document.getElementById('importInput').value.trim();
+            if (!importText) {
+              showStatus('Please paste data to import!', 'warning');
+              return;
+            }
+            
+            try {
+              showStatus('Importing data...', 'info');
+              await importData(importText);
+              showStatus('✅ Import successful! Refreshing dashboard...', 'success');
+              setTimeout(() => {
+                currentPage = '';
+                generateDashboardPage();
+              }, 500);
+            } catch (error) {
+              showStatus(`❌ Import failed: ${error.message}`, 'error');
+            }
+          });
+        }
+      
+        // Clear Import
+        const clearImportBtn = document.getElementById('clearImportBtn');
+        if (clearImportBtn) {
+          clearImportBtn.addEventListener('click', () => {
+            document.getElementById('importInput').value = '';
+            document.getElementById('exportOutput').value = '';
+            document.getElementById('importStatus')?.classList.add('hidden');
+          });
+        }
+      }
+      
+      async function exportAllData() {
+        const sections = await getAllSections();
+        const content = await getAllContent();
+                     
+        const exportOutput = document.getElementById('exportOutput');
+
+        // Auto-select all text for easy copying
+        requestAnimationFrame(() => {
+          console.log(1)
+          requestAnimationFrame(() => {
+            exportOutput.focus();
+            exportOutput.select();
+            exportOutput.setSelectionRange(0, 99999); // Fallback for mobile
+          
+            // Dispatch input event to trigger any listeners
+            exportOutput.dispatchEvent(new Event('input', { bubbles: true }));
+                  
+            copyToClipboard(jsonString);
+          });
+        });
+        
+        return {
+          dbVersion: dbVersion,
+          dbName: dbName,
+          exportDate: new Date().toISOString(),
+          data: {
+            sections: sections,
+            content: content
+          }
+        };
+      }
+      
+      async function importData(jsonString) {
+        let data;
+        
+        try {
+          data = JSON.parse(jsonString);
+        } catch (error) {
+          throw new Error('Invalid JSON format!');
+        }
+        
+        // Validate structure
+        if (!data.data || !data.data.sections) {
+          throw new Error('Invalid data structure! Expected at least sections.');
+        }
+        
+        const importedSections = data.data.sections;
+        const importedContent = data.data.content;
+        
+        // Import sections first
+        if (importedSections) {
+          for (const section of importedSections) {
+            await saveSection(section);
+          }
+        }
+        
+        // Import content
+        if (importedContent) {
+          for (const item of importedContent) {
+            // Validate required fields
+            if (!item.name || !item.ytId || !item.type) {
+              console.warn('Skipping invalid content item:', item);
+              continue;
+            }
+            await saveContent(item);
+          }
+        }
+        
+        console.log(`Imported ${importedSections?.length || 'No sections'} sections and ${importedContent?.length || 'No content'} content items`);
+        closeModal();
+      }
+      
+      function showStatus(message, type) {
+        const statusEl = document.getElementById('importStatus');
+        if (!statusEl) return;
+        
+        statusEl.classList.remove('hidden', 'bg-green-500/20', 'bg-red-500/20', 'bg-yellow-500/20', 'bg-blue-500/20');
+        statusEl.textContent = message;
+        
+        const bgClass = {
+          success: 'bg-green-500/20 border-green-500/40',
+          error: 'bg-red-500/20 border-red-500/40',
+          warning: 'bg-yellow-500/20 border-yellow-500/40',
+          info: 'bg-blue-500/20 border-blue-500/40'
+        }[type];
+        
+        statusEl.className = `mt-2 text-sm p-3 rounded-xl border ${bgClass} ${type === 'success' ? 'text-green-400' : type === 'error' ? 'text-red-400' : type === 'warning' ? 'text-yellow-400' : 'text-blue-400'}`;
+      }
+      
+      // Expose globally
+      window.exportAllData = exportAllData;
+      window.importData = importData;
+    </script>
+    <!--- Eruda console --->
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>
+      eruda.init();
+    </script>
+  </body>
+</html>
